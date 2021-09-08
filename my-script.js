@@ -13,6 +13,7 @@ function createGrid(){
            
             const divCell = document.createElement("div");
             divCell.setAttribute("id",`cell-${col}-${row}`);
+            divCell.setAttribute("class","cell");
             divCell.style.border="1px dashed";
             divCell.style.Height="20px";
             divCell.style.Width="20px";
@@ -23,4 +24,24 @@ function createGrid(){
     }
 }
 
+//This has to be before
+//const cells = document.querySelectorAll(".cell");
+//in order for cells to be populated.
 createGrid();
+
+
+function draw(e){
+    if(e.target.className != 'cell'){ return;}
+    // console.log(e.target.id);
+    // console.log(typeof(e.target.id));
+    const cell = document.querySelector(`#${e.target.id}`);
+    // console.log(cell);
+    cell.style.background="black";
+}
+
+const cells = document.querySelectorAll(".cell");
+cells.forEach(cell => {
+    addEventListener("mouseover",draw)
+});
+
+
