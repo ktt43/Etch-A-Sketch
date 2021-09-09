@@ -11,6 +11,7 @@ const gridScaler = document.querySelector("#gridSize");
 const sizeDisplay = document.querySelector("#size");
 
 function createGrid(){
+    console.log("CREATING GRID");
     divContainer.style.display="grid";
     divContainer.style.gridTemplateColumns= `repeat(${rows},1fr)`;
     divContainer.style.gridTemplateRows = `repeat(${columns},1fr)`;
@@ -36,43 +37,63 @@ function createGrid(){
 //in order for cells to be populated.
 createGrid();
 
+//e is the event
 function draw(e){
-    // console.log(e);
     if(e.target.className != 'cell'){ return;}
-    // console.log(e.target.id);
-    // console.log(typeof(e.target.id));
     const cell = document.querySelector(`#${e.target.id}`);
-    // console.log(cell);
     cell.style.background="black";
 }
 
-const cells = document.querySelectorAll(".cell");
+//Get All the NxN updated Cells
+function getAllCells(){
+    return document.querySelectorAll(".cell");
+}
 
-cells.forEach(cell => {
-    addEventListener("mouseover",draw)
-});
+// getAllCells().forEach(cell => {
+//     console.log("ADD DRAW");
+//     addEventListener("mouseover",draw)
+// });
+
+window.addEventListener("mouseover",draw);
 
 function clearGrid(e){
+    console.log("CLEARING GRID");
     // const cells = document.querySelectorAll(".cell");
-    cells.forEach(cell => {
+    getAllCells().forEach(cell => {
         cell.style.background="white";
     })
 }
 
+function setGridSize(e){
+    console.log("SETTING GRID SIZE");
+    getAllCells().forEach(cell=>
+        divContainer.removeChild(cell))
+
+    rows = gridScaler.value;
+    columns= gridScaler.value;
+    sizeDisplay.textContent = rows;
+    createGrid();
+
+}
+
+function toggleBorder(e){
+    // console.log(divContainer.childNodes);
+    divContainer.childNodes.forEach(cell =>{
+        // console.log(cell.className);
+        if(cell.className === "cell"){
+            if(cell.style.border !== "1px solid"){
+                cell.style.border="1px solid"
+                return;
+            }
+            cell.style.border="none";
+        }
+    // console.log(cell);
+    
+    });
+    
+
+}
+
+gridScaler.addEventListener('mouseup', setGridSize);
 clearButton.addEventListener('click',clearGrid);
-
-
-
-// function setGridSize(e){
-//     cells.forEach(cell=>
-//         divContainer.removeChild(cell))
-
-//     rows = gridScaler.value;
-//     columns= gridScaler.value;
-//     sizeDisplay.textContent = rows;
-//     createGrid();
-
-// }
-
-// gridScaler.addEventListener('mouseup', setGridSize);
-
+gridButton.addEventListener('click',toggleBorder);
