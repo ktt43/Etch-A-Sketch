@@ -8,9 +8,30 @@
     <script src="my-script.js" defer></script>
 </head>
 <body>
+
+    <header id="titleHeader">
+        <h1>
+            Etch-A-Sketch
+        </h1>
+    </header>
+   
     <div class="centerWrapper">
         <div id="divContainer">
             
+        </div>
+    
+
+        <div id="optionsContainer" >
+            <input type="button" id="black" value="black">
+            <input type="button" id="clear" value="reset">
+            <input type="button" id="rainbow" value="rainbow">
+            <div id="gridSizeContainer">
+                <label for="gridSize">Grid Size</label>
+                <input type="range" id="gridSize" name="gridSize" min="4" max="80" value="40">
+                <p id="size"></p>
+            </div>
+            <input type="button" id="borderOn" value="Border ON/OFF">
+            <input type="button" id="colorPicker" value="Color Picker">
         </div>
     </div>
 </body>
