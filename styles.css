@@ -3,6 +3,7 @@ body{
     height: 100%;
     margin: 0;
     overflow: hidden;
+    background-image: url("https://envato-shoebox-0.imgix.net/05c3/0e33-cb09-480f-b3e7-d1b3aad47385/2013_06_15_34448.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=700&s=50cea934d81c4930924b06bc83199c68");
 }
 
 .centerWrapper {
@@ -29,6 +30,7 @@ body{
     justify-content: center;
     gap: 20px;
     margin-top:20px;
+    text-align: center;
 }
 
 #titleHeader {
@@ -40,12 +42,23 @@ h1{
     margin-bottom: 2%;
 }
 
+#gridSizeContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+#colorPicker{
+    margin-top: auto;
+    margin-bottom: auto;     
+    }
 
 @media (max-width: 600px){
     #optionsContainer{
         flex-direction: column;
         gap: 4px;
+        
     }
+
     .centerWrapper>#divContainer{
         margin-left: auto;
         margin-right: auto;
@@ -54,4 +67,10 @@ h1{
         height: 400px;
         
     }
+
+   #colorPicker{
+    margin-left: auto;
+    margin-right: auto;     
+    }
+
 }

@@ -1,14 +1,16 @@
-let rows = 4;
+let rows = 40;
 let columns = rows;
 
 const divContainer = document.querySelector("#divContainer");
 const clearButton = document.querySelector("#clear");
-const blackButton = document.querySelector("#black");
 const rainbowButton = document.querySelector("#rainbow");
 const gridButton = document.querySelector("#borderOn");
 const colorButton = document.querySelector("#colorPicker");
 const gridScaler = document.querySelector("#gridSize");
 const sizeDisplay = document.querySelector("#size");
+let border = false;
+let rainbow = false;
+let currentColor="#000000";
 
 function createGrid(){
     console.log("CREATING GRID");
@@ -17,17 +19,11 @@ function createGrid(){
     divContainer.style.gridTemplateRows = `repeat(${columns},1fr)`;
 
     for(let col=1;col <= columns;col++){
-        for(let row=1;row<=rows;row++){
-           
+        for(let row=1;row<=rows;row++){         
             const divCell = document.createElement("div");
             divCell.setAttribute("id",`cell-${col}-${row}`);
-            divCell.setAttribute("class","cell");
-            // divCell.style.border="1px dashed";
-            // divCell.style.Height="20px";
-            //  divCell.style.Width="20px";
-            // divCell.innerText="hi";
+            divCell.setAttribute("class","cell");     
             divContainer.appendChild(divCell);
-            // console.log(divCell);
         }
     }
 }
@@ -41,7 +37,20 @@ createGrid();
 function draw(e){
     if(e.target.className != 'cell'){ return;}
     const cell = document.querySelector(`#${e.target.id}`);
-    cell.style.background="black";
+    if(!rainbow){
+        console.log(currentColor);
+        cell.style.backgroundColor=currentColor;
+        colorButton.value = currentColor;
+        
+        return;
+    } else {
+        currentColor = "#"+Math.floor(Math.random()*16777215).toString(16);
+        cell.style.backgroundColor = currentColor;
+        // console.log(typeof(currentColor));
+        colorButton.value =currentColor;
+        return;
+    }
+   
 }
 
 //Get All the NxN updated Cells
@@ -73,27 +82,47 @@ function setGridSize(e){
     columns= gridScaler.value;
     sizeDisplay.textContent = rows;
     createGrid();
-
+    if(border){
+        toggleBorder();
+    }
 }
 
 function toggleBorder(e){
-    // console.log(divContainer.childNodes);
     divContainer.childNodes.forEach(cell =>{
-        // console.log(cell.className);
         if(cell.className === "cell"){
             if(cell.style.border !== "1px solid"){
                 cell.style.border="1px solid"
+                border =true;
+           
+                gridButton.style.boxShadow="0px 0px 10px red"
                 return;
             }
             cell.style.border="none";
+            gridButton.style.boxShadow="none"
+            border =false;
         }
-    // console.log(cell);
-    
     });
-    
-
 }
+
+function toggleRainbow(e){
+    if(!rainbow){
+        rainbow=true;
+        rainbowButton.style.boxShadow="0px 0px 10px red"
+    } else {
+        rainbow=false;
+        rainbowButton.style.boxShadow="none"
+    }
+}
+
+function changeColor(e){
+    currentColor=e.target.value;
+}
+
+
+
 
 gridScaler.addEventListener('mouseup', setGridSize);
 clearButton.addEventListener('click',clearGrid);
 gridButton.addEventListener('click',toggleBorder);
+rainbowButton.addEventListener('click',toggleRainbow);
+colorButton.addEventListener('change',changeColor);
